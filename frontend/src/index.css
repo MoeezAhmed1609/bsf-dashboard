@@ -1,6 +1,6 @@
 .datePicker{
   width: 94%;
-  padding: 18px 14px;
+  padding: 15.5px 14px;
   border: 1px solid #909090;
   border-radius: 4px;
   font-size: 18px;
@@ -9,5 +9,5 @@
 }
 
 .datePicker:focus{
-  border: 2px solid green;
+  border: 1.5px solid green;
 }

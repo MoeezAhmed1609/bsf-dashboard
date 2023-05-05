@@ -1,15 +1,17 @@
-const express = require('express')
+const express = require("express");
 
 // Controllers Import
 const {
   getAllExpenses,
   createExpenseRecord,
-} = require('../controllers/expenseController')
+  deleteExpenseRecord,
+} = require("../controllers/expenseController");
 
-const router = express.Router()
+const router = express.Router();
 
 // Routes
-router.get('/expenses', getAllExpenses)
-router.post('/expenses/create', createExpenseRecord)
+router.get("/expenses", getAllExpenses);
+router.post("/expenses/create", createExpenseRecord);
+router.delete("/expenses/delete", deleteExpenseRecord);
 
-module.exports = router
+module.exports = router;

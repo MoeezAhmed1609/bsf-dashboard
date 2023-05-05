@@ -5,10 +5,6 @@ const expensesSchema = mongoose.Schema({
     type: String,
     required: [true, 'Date must be mentioned!'],
   },
-  category: {
-    type: String,
-    required: [true, 'Expense Category is required!'],
-  },
   expense: {
     description: {
       type: String,
@@ -19,13 +15,6 @@ const expensesSchema = mongoose.Schema({
       required: [true, 'Mention total paid amount!'],
     },
     status: { type: Boolean, default: true },
-    year: {
-      type: String,
-      default: function () {
-        const d = new Date(this.date)
-        return d.getFullYear()
-      },
-    },
     month: {
       type: String,
       default: function () {
@@ -44,7 +33,7 @@ const expensesSchema = mongoose.Schema({
           'December',
         ]
 
-        const d = new Date(this.date)
+        const d = Date.parse(this.date)
         return monthNames[d.getMonth()]
       },
     },

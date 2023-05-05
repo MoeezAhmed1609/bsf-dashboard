@@ -32,7 +32,9 @@ const Dashboard = () => {
   const { supplementsSalesData } = useSelector(
     (state) => state.supplementsSales
   );
+  const { supplementsData } = useSelector((state) => state.supplements);
   const { utilsSalesData } = useSelector((state) => state.utilsSales);
+  const { utilsData } = useSelector((state) => state.utils);
 
   // Total Sales Calculation
 
@@ -52,16 +54,11 @@ const Dashboard = () => {
       "December",
     ];
 
-    const d = new Date();
+    const d = Date.today();
     return monthNames[d.getMonth()];
-  };
-  const getCurrentYear = () => {
-    const d = new Date();
-    return String(d.getFullYear());
   };
 
   const currentMonth = getMonthName();
-  const currentYear = getCurrentYear();
 
   const [month, setMonth] = useState(currentMonth);
 
@@ -85,10 +82,14 @@ const Dashboard = () => {
   let totalMonthExpenses = 0;
   let totalMonthUtilsSales = 0;
   let totalMonthSupplementSales = 0;
+  let totalLedger = 0;
   clientsData?.clients?.map((client) => {
     client?.fees?.map((fee) => {
       if (fee?.month === month) {
         totalMonthFees += Number(fee?.paidAmount);
+      }
+      if (fee?.month === month && fee?.status === "Unpaid") {
+        totalLedger += Number(fee?.balanceAmount);
       }
     });
   });
@@ -101,10 +102,16 @@ const Dashboard = () => {
     if (sales?.sale?.month === month) {
       totalMonthUtilsSales += Number(sales?.sale?.amountPaid);
     }
+    if (sales?.sale?.month === month && sales?.sale?.isPaid === false) {
+      totalLedger += sales?.sale?.amountBalance;
+    }
   });
   supplementsSalesData?.supplementSales?.map((sales) => {
     if (sales?.sale?.month === month) {
       totalMonthSupplementSales += Number(sales?.sale?.amountPaid);
+    }
+    if (sales?.sale?.month === month && sales?.sale?.isPaid === false) {
+      totalLedger += sales?.sale?.amountBalance;
     }
   });
   let data = {
@@ -113,10 +120,10 @@ const Dashboard = () => {
     expenses: totalMonthExpenses,
     utilsSales: totalMonthUtilsSales,
     supplementsSales: totalMonthSupplementSales,
+    ledger: totalLedger,
   };
   feesLineData.push(data);
   let totalMonthSales = totalMonthUtilsSales + totalMonthSupplementSales;
-
   // Get Fee Reminders
   let reminders = [];
   clientsData?.clients?.filter((client) => {
@@ -132,6 +139,15 @@ const Dashboard = () => {
       reminders.unshift(data);
     }
   });
+
+  // STock Reminders
+  const stockReminders = [];
+  utilsData?.utils?.filter((data) => {
+    if (data?.stock < 6) {
+      stockReminders.push(data);
+    }
+  });
+  console.log(stockReminders);
 
   return (
     <Box
@@ -408,6 +424,73 @@ const Dashboard = () => {
                       <span style={{ paddingLeft: "5px" }}>
                         {reminder?.feeDate}
                       </span>
+                    </Typography>
+                  </Alert>
+                </Link>
+              ))
+            : null}
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          width: "88%",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          border: `2px solid ${colors.lightGreen[700]}`,
+          borderRadius: "20px",
+          marginTop: "20px",
+        }}
+      >
+        <Box
+          sx={{
+            height: "74px",
+            width: "93%",
+            display: "flex",
+            alignItems: "center",
+            paddingLeft: { xs: "10px", sm: "20px", md: "30px" },
+            paddingTop: { xs: "10px", sm: "20px", md: "35px" },
+            borderBottom: `2px solid ${colors.lightGreen[700]}`,
+          }}
+        >
+          <Typography variant="h5">Stock Reminders</Typography>
+        </Box>
+        <Box
+          sx={{
+            height: "350px",
+            width: { xs: "97%", sm: "90%", md: "85%" },
+            marginTop: "10px",
+            overflowY: "scroll",
+          }}
+        >
+          {stockReminders.length > 0
+            ? stockReminders.map((reminder) => (
+                <Link
+                  key={reminder?.client?._id}
+                  to={"/sales/utilities"}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Alert
+                    icon={
+                      <img
+                        src={reminder?.image?.url}
+                        alt="product"
+                        style={{ height: "60px" }}
+                      />
+                    }
+                    severity="success"
+                    sx={{
+                      height: "74px",
+                      alignItems: "center",
+                      margin: "20px 0",
+                    }}
+                  >
+                    <Typography sx={{ marginLeft: "15px" }} variant="subtitle2">
+                      Only
+                      <span style={{ padding: "0 5px" }}>
+                        {reminder?.stock}
+                      </span>
+                      stock remaining for {reminder?.name}
                     </Typography>
                   </Alert>
                 </Link>

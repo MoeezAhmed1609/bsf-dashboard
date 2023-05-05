@@ -4,18 +4,23 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import TableRow from "@mui/material/TableRow";
 import { Box, Button, Typography } from "@mui/material";
+
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // Redux Toolkit Import
 import { useSelector, useDispatch } from "react-redux";
 
-import { getExpenses } from "../redux/actions/expenseActions";
+import { getExpenses, deleteExpense } from "../redux/actions/expenseActions";
 
 // Import React To Print
 import { useReactToPrint } from "react-to-print";
 
 const columns = [
+  { label: "", width: 50, align: "center" },
   { label: "ID", width: 80, align: "center" },
   { label: "Date", width: 110, align: "left" },
   {
@@ -33,7 +38,6 @@ const columns = [
 ];
 
 export default function ExpensesTable(props) {
-  const { mode } = props;
   const dispatch = useDispatch();
   // Getting expenses from redux state
   const { expensesData } = useSelector((state) => state.expenses);
@@ -42,9 +46,7 @@ export default function ExpensesTable(props) {
   const data = [];
 
   expensesData?.expenses?.filter((expense) => {
-    if (expense?.category === mode) {
-      data.unshift(expense);
-    }
+    data.unshift(expense);
   });
 
   // Print Summary
@@ -59,6 +61,11 @@ export default function ExpensesTable(props) {
 
   const handlePrint = () => {
     generatePrint();
+  };
+  const handleDeleteExpense = (id) => {
+    dispatch(deleteExpense(id));
+    alert("Deleted!");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -93,6 +100,15 @@ export default function ExpensesTable(props) {
                       tabIndex={-1}
                       key={expense._id}
                     >
+                      <TableCell align="center">
+                        <Tooltip title="Delete">
+                          <IconButton
+                            onClick={() => handleDeleteExpense(expense._id)}
+                          >
+                            <DeleteIcon color="error" fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
                       <TableCell align="center">{index + 1}</TableCell>
                       <TableCell>{expense.date}</TableCell>
                       <TableCell>{expense.expense.description}</TableCell>
@@ -118,7 +134,7 @@ export default function ExpensesTable(props) {
         </>
       ) : (
         <Box sx={{ width: "100%", textAlign: "center" }}>
-          <Typography variant="h6">No Items</Typography>
+          <Typography variant="h6">No Record!</Typography>
         </Box>
       )}
     </>

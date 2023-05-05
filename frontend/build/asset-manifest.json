@@ -1,14 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.993ebbf0.css",
-    "main.js": "/static/js/main.30555fe7.js",
+    "main.css": "/static/css/main.d7d36b2c.css",
+    "main.js": "/static/js/main.27a22844.js",
+    "static/media/BEING.png": "/static/media/BEING.650eea85a578f09595a5.png",
     "static/media/profile.webp": "/static/media/profile.5f3a3fdd4f7b378a1c11.webp",
     "index.html": "/index.html",
-    "main.993ebbf0.css.map": "/static/css/main.993ebbf0.css.map",
-    "main.30555fe7.js.map": "/static/js/main.30555fe7.js.map"
+    "main.d7d36b2c.css.map": "/static/css/main.d7d36b2c.css.map",
+    "main.27a22844.js.map": "/static/js/main.27a22844.js.map"
   },
   "entrypoints": [
-    "static/css/main.993ebbf0.css",
-    "static/js/main.30555fe7.js"
+    "static/css/main.d7d36b2c.css",
+    "static/js/main.27a22844.js"
   ]
 }

@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
 // Controllers
 const {
@@ -10,14 +10,16 @@ const {
   updateUtilsSaleRecord,
   updateUnpaidUtilsSalesRecord,
   deleteUtilsSalesRecord,
-} = require('../controllers/utilsController')
+  updateUtilsStock,
+} = require("../controllers/utilsController");
 
-router.get('/utils', getAllUtils)
-router.post('/utils/create', createUtils)
-router.get('/utils/sales', getAllUtilsSales)
-router.post('/utils/sales/create', createUtilsSales)
-router.put('/utils/sales/update', updateUtilsSaleRecord)
-router.put('/utils/sales/update/unpaid', updateUnpaidUtilsSalesRecord)
-router.delete('/utils/sales/delete', deleteUtilsSalesRecord)
+router.get("/utils", getAllUtils);
+router.post("/utils/create", createUtils);
+router.put("/utils/stock", updateUtilsStock);
+router.get("/utils/sales", getAllUtilsSales);
+router.post("/utils/sales/create", createUtilsSales);
+router.put("/utils/sales/update", updateUtilsSaleRecord);
+router.put("/utils/sales/update/unpaid", updateUnpaidUtilsSalesRecord);
+router.delete("/utils/sales/delete", deleteUtilsSalesRecord);
 
-module.exports = router
+module.exports = router;

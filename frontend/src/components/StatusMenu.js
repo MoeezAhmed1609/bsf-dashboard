@@ -56,16 +56,18 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function StatusMenu({ receipt, handleReceiptUpdate }) {
+export default function StatusMenu({ receipt, setFeeReceipt, setReceiptData }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [status, setStatus] = useState("");
-  const [amountPaid, setAmountPaid] = useState("");
+  const [amountPaid, setAmountPaid] = useState(0);
+  const [paidDate, setPaidDate] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const isPaid = status === "Paid" ? true : false;
 
   const amountBalance = receipt?.totalBalanceAmount - amountPaid;
 
-  const totalAmountPaid = Number(receipt.paidAmount) + Number(amountPaid);
+  const totalAmountPaid = Number(receipt?.paidAmount) + Number(amountPaid);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -105,6 +107,15 @@ export default function StatusMenu({ receipt, handleReceiptUpdate }) {
         onClose={handleClose}
       >
         <MenuItem disableRipple>
+          <input
+            type="date"
+            className="datePicker"
+            onChange={(e) => setPaidDate(e.target.value)}
+            style={{ width: "100%" }}
+            required
+          />
+        </MenuItem>
+        <MenuItem disableRipple>
           <TextField
             id="outlined-error-helper-text"
             label="Paid Amount"
@@ -125,6 +136,21 @@ export default function StatusMenu({ receipt, handleReceiptUpdate }) {
         </MenuItem>
         <MenuItem disableRipple>
           <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Method</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={paymentMethod}
+              label="Status"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <MenuItem value={"Cash"}>Cash</MenuItem>
+              <MenuItem value={"Online"}>Online</MenuItem>
+            </Select>
+          </FormControl>
+        </MenuItem>
+        <MenuItem disableRipple>
+          <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -140,25 +166,33 @@ export default function StatusMenu({ receipt, handleReceiptUpdate }) {
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem
-          onClick={handleClose}
           disableRipple
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <Button
             variant="contained"
             sx={{ width: "86%" }}
-            onClick={() =>
-              handleReceiptUpdate({
-                id: receipt._id,
+            color="success"
+            onClick={() => {
+              setFeeReceipt(true);
+              setReceiptData({
+                id: receipt?.id,
+                date: receipt?.date,
+                paidDate,
+                client: receipt?.name,
                 category: receipt?.category,
-                isPaid,
+                amount: receipt?.totalAmount,
+                paid: totalAmountPaid,
+                balance: Number(receipt?.totalAmount) - Number(totalAmountPaid),
+                method: paymentMethod,
+                status,
                 amountBalance,
-                totalAmountPaid,
-              })
-            }
+                feesId: receipt?.feesId,
+              });
+            }}
             disabled={!status || !amountPaid}
           >
-            Submit
+            Create Receipt
           </Button>
         </MenuItem>
       </StyledMenu>

@@ -23,6 +23,9 @@ import {
   DELETE_SUPPLEMENTS_SALES_REQUEST,
   DELETE_SUPPLEMENTS_SALES_SUCCESS,
   DELETE_SUPPLEMENTS_SALES_FAIL,
+  UPDATE_SUPPLEMENTS_STOCK_REQUEST,
+  UPDATE_SUPPLEMENTS_STOCK_SUCCESS,
+  UPDATE_SUPPLEMENTS_STOCK_FAIL,
 } from "../constants/supplementConstants";
 
 // Get all Supplements
@@ -132,8 +135,8 @@ export const createSupplementSales =
 export const updateUnpaidSupplementSalesReceipt =
   (utilsSalesUpdateData) => async (dispatch) => {
     dispatch({ type: UPDATE_UNPAID_SUPPLEMENTS_SALES_REQUEST });
-    const { data } = await axios({
-      url: "/api/v1/utils/sales/update",
+    const data = await axios({
+      url: "/api/v1/supplement/sales/update",
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       data: {
@@ -144,8 +147,11 @@ export const updateUnpaidSupplementSalesReceipt =
       },
     })
       .then((r) => {
-        console.log(r.data);
-        dispatch({ type: UPDATE_UNPAID_SUPPLEMENTS_SALES_SUCCESS, payload: r.data });
+        console.log(r);
+        dispatch({
+          type: UPDATE_UNPAID_SUPPLEMENTS_SALES_SUCCESS,
+          payload: r.data,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -165,6 +171,30 @@ export const deleteSupplementSales = (supplementId) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     data: {
       id: supplementId,
+    },
+  })
+    .then((r) => {
+      console.log(r.data);
+      dispatch({ type: DELETE_SUPPLEMENTS_SALES_SUCCESS, payload: r.data });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: DELETE_SUPPLEMENTS_SALES_FAIL,
+        payload: err,
+      });
+    });
+};
+
+export const updateSupplementStock = (updateData) => async (dispatch) => {
+  dispatch({ type: DELETE_SUPPLEMENTS_SALES_REQUEST });
+  const { data } = await axios({
+    url: "/api/v1/supplement/stock",
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    data: {
+      supplementId: updateData.id,
+      stock: updateData.stock,
     },
   })
     .then((r) => {

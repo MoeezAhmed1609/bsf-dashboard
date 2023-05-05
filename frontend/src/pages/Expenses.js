@@ -33,22 +33,19 @@ const Expenses = () => {
 
   // States define
   const [selectedDate, setSelectedDate] = useState("");
-  const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
-  const [mode, setMode] = useState("");
 
   const handleExpenseSubmit = () => {
     const newExpense = {
       date: selectedDate,
-      category,
       expense: {
         description: description,
         amountPaid: paidAmount,
       },
     };
     dispatch(createExpense(newExpense));
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (
@@ -122,7 +119,7 @@ const Expenses = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={4}>
                         <input
                           type="date"
                           className="datePicker"
@@ -131,25 +128,7 @@ const Expenses = () => {
                           }
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <FormControl fullWidth sx={{ width: "94%" }}>
-                          <InputLabel id="demo-simple-select-label">
-                            Category
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={category}
-                            label="Category"
-                            required
-                            onChange={(e) => setCategory(e.target.value)}
-                          >
-                            <MenuItem value={"Utility"}>Utility</MenuItem>
-                            <MenuItem value={"Supplement"}>Supplement</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12} sm={6} sx={{ marginTop: "15px" }}>
+                      <Grid item xs={12} sm={4}>
                         <TextField
                           id="outlined-error-helper-text"
                           label="Description"
@@ -159,7 +138,7 @@ const Expenses = () => {
                           }
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6} sx={{ marginTop: "15px" }}>
+                      <Grid item xs={12} sm={4}>
                         <TextField
                           id="outlined-error-helper-text"
                           label="Paid Amount"
@@ -221,27 +200,8 @@ const Expenses = () => {
                     All Expenses
                   </Typography>
                 </Grid>
-                <Grid sx={{ width: "100%", textAlign: "center", marginBottom: '15px' }} item xs={12}>
-                  <Typography variant="subtitle1">Select Category</Typography>
-                  <FormControl sx={{ width: "240px" }}>
-                    <InputLabel id="demo-simple-select-label">
-                      Category
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={mode}
-                      label="Category"
-                      required
-                      onChange={(e) => setMode(e.target.value)}
-                    >
-                      <MenuItem value={"Utility"}>Utility</MenuItem>
-                      <MenuItem value={"Supplement"}>Supplement</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
                 <Grid sx={{ width: "100%" }} item xs={12}>
-                  <ExpensesTable mode={mode} />
+                  <ExpensesTable />
                 </Grid>
               </Grid>
             </Grid>

@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { colors } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -37,24 +38,29 @@ export default function LineChart({ lineData }) {
     labels: lineData?.map((line) => line?.month),
     datasets: [
       {
-        label: "Expenses",
-        data: lineData?.map((line) => line?.expenses),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
         label: "Collected Fees",
         data: lineData?.map((line) => line?.fees),
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-      {
-        label: "Utilities Sales",
-        data: lineData?.map((line) => line?.utilsSales),
-        backgroundColor: "red",
+        backgroundColor: colors.teal[500],
       },
       {
         label: "Supplements Sales",
         data: lineData?.map((line) => line?.supplementsSales),
-        backgroundColor: "blue",
+        backgroundColor: colors.cyan[500],
+      },
+      {
+        label: "Utilities Sales",
+        data: lineData?.map((line) => line?.utilsSales),
+        backgroundColor: colors.green[300],
+      },
+      {
+        label: "Expenses",
+        data: lineData?.map((line) => line?.expenses),
+        backgroundColor: colors.teal[800],
+      },
+      {
+        label: "Ledger",
+        data: lineData?.map((line) => line?.ledger),
+        backgroundColor: colors.teal[200],
       },
     ],
   };

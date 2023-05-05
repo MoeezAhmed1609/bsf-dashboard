@@ -304,7 +304,7 @@ export default function MiniDrawer() {
               >
                 <ListItemButton sx={{ pl: 2 }}>
                   {open === false ? (
-                    <Tooltip title="Utilities">
+                    <Tooltip title="Gym Products">
                       <ListItemIcon>
                         <InventoryIcon />
                       </ListItemIcon>
@@ -314,7 +314,7 @@ export default function MiniDrawer() {
                       <InventoryIcon />
                     </ListItemIcon>
                   )}
-                  <ListItemText primary="Utilities" />
+                  <ListItemText primary="Gym Products" />
                 </ListItemButton>
               </Link>
               <Link

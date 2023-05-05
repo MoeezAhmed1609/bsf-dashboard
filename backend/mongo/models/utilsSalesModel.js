@@ -10,7 +10,7 @@ const utilsSalesSchema = mongoose.Schema({
     date: { type: String, required: [true, "Date must be mentioned"] },
     category: {
       type: String,
-      default: "Utilities",
+      default: "Gym Products",
     },
     year: {
       type: String,

@@ -14,6 +14,10 @@ const utilsSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  amount: {
+    type: String,
+    required: true,
+  },
 })
 
 module.exports = mongoose.model('Utils', utilsSchema)

@@ -29,7 +29,7 @@ exports.createSupplement = async (req, res, next) => {
     crop: "scale",
   });
 
-  const { name, stock } = req.body.supplement;
+  const { name, stock, amount } = req.body.supplement;
 
   const supplement = await Supplement.create({
     name,
@@ -38,6 +38,7 @@ exports.createSupplement = async (req, res, next) => {
       url: cloud.secure_url,
     },
     stock,
+    amount,
   });
   res.status(201).json({
     success: true,
@@ -70,20 +71,20 @@ exports.createSupplementSales = async (req, res, next) => {
 // }
 
 // update unpaid utils sales record
-exports.updateUnpaidUtilsSalesRecord = async (req, res, next) => {
+exports.updateUnpaidSupplementsSalesRecord = async (req, res, next) => {
   const utilsSale = await SupplementSales.updateOne(
-    { '_id': req.body.saleId },
+    { _id: req.body.saleId },
     {
-        'sale.isPaid': req.body.isPaid,
-        'sale.amountBalance': req.body.amountBalance,
-        'sale.amountPaid': req.body.amountPaid,
-    },
-  )
+      "sale.isPaid": req.body.isPaid,
+      "sale.amountBalance": req.body.amountBalance,
+      "sale.amountPaid": req.body.amountPaid,
+    }
+  );
   res.status(200).json({
     success: true,
     utilsSale,
-  })
-}
+  });
+};
 
 // delete supplement sales record
 exports.deleteSupplementSalesRecord = async (req, res, next) => {
@@ -94,9 +95,22 @@ exports.deleteSupplementSalesRecord = async (req, res, next) => {
       message: "Supplement not found!",
     });
   }
-  await supplement.remove()
+  await supplement.remove();
   res.status(200).json({
     success: true,
-    message: "Deleted!"
+    message: "Deleted!",
+  });
+};
+
+// Update Supplement stock
+
+exports.updateSupplementStock = async (req, res) => {
+  const supplement = await Supplement.updateOne(
+    { _id: req.body.supplementId },
+    { stock: req.body.stock }
+  );
+  res.status(200).json({
+    success: true,
+    supplement,
   });
 };

@@ -9,8 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 // Redux Actions Import
 import { getClients } from "./redux/actions/clientActions";
 import { getExpenses } from "./redux/actions/expenseActions";
-import { getSupplementsSales } from "./redux/actions/supplementActions";
-import { getUtilsSales } from "./redux/actions/utilsActions";
+import {
+  getAllSupplements,
+  getSupplementsSales,
+} from "./redux/actions/supplementActions";
+import { getUtilsSales, getAllUtils } from "./redux/actions/utilsActions";
 
 // Pages Import
 import Dashboard from "./pages/Dashboard";
@@ -33,6 +36,8 @@ function App() {
     dispatch(getExpenses());
     dispatch(getUtilsSales());
     dispatch(getSupplementsSales());
+    dispatch(getAllSupplements());
+    dispatch(getAllUtils());
   }, [dispatch]);
   return (
     <Router>

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 // Constants Import
 import {
@@ -23,138 +23,140 @@ import {
   DELETE_UTILS_SALES_REQUEST,
   DELETE_UTILS_SALES_SUCCESS,
   DELETE_UTILS_SALES_FAIL,
-} from '../constants/utilsConstants'
+  UPDATE_UTILS_STOCK_REQUEST,
+  UPDATE_UTILS_STOCK_SUCCESS,
+  UPDATE_UTILS_STOCK_FAIL,
+} from "../constants/utilsConstants";
 
 // Get all Utils
 export const getAllUtils = () => async (dispatch) => {
   try {
-    dispatch({ type: GET_ALL_UTILS_REQUEST })
-    const { data } = await axios.get('/api/v1/utils')
-    dispatch({ type: GET_ALL_UTILS_SUCCESS, payload: data })
+    dispatch({ type: GET_ALL_UTILS_REQUEST });
+    const { data } = await axios.get("/api/v1/utils");
+    dispatch({ type: GET_ALL_UTILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: GET_ALL_UTILS_FAIL,
       payload: error.response.data.message,
-    })
+    });
   }
-}
+};
 
 // Create Utils
 export const createUtils = (utilsData) => async (dispatch) => {
-  dispatch({ type: CREATE_UTILS_REQUEST })
+  dispatch({ type: CREATE_UTILS_REQUEST });
 
   const { data } = await axios({
-    url: '/api/v1/utils/create',
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    url: "/api/v1/utils/create",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     data: {
       utils: utilsData.utils,
       image: utilsData.image,
     },
   })
     .then((r) => {
-      dispatch({ type: CREATE_UTILS_SUCCESS, payload: r.data })
+      dispatch({ type: CREATE_UTILS_SUCCESS, payload: r.data });
     })
     .catch((err) => {
-      console.log(err.message)
+      console.log(err.message);
       dispatch({
         type: CREATE_UTILS_FAIL,
         payload: err,
-      })
-    })
-}
+      });
+    });
+};
 
 // Get all utils Sales
 
 export const getUtilsSales = () => async (dispatch) => {
   try {
-    dispatch({ type: GET_UTILS_SALES_REQUEST })
-    const { data } = await axios.get('/api/v1/utils/sales')
-    dispatch({ type: GET_UTILS_SALES_SUCCESS, payload: data })
+    dispatch({ type: GET_UTILS_SALES_REQUEST });
+    const { data } = await axios.get("/api/v1/utils/sales");
+    dispatch({ type: GET_UTILS_SALES_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: GET_UTILS_SALES_FAIL,
       payload: error.response.data.message,
-    })
+    });
   }
-}
+};
 
 // Create Utils Sales
 export const createUtilsSales = (utilsSalesData) => async (dispatch) => {
   try {
-    dispatch({ type: CREATE_UTILS_SALES_REQUEST })
+    dispatch({ type: CREATE_UTILS_SALES_REQUEST });
     const config = {
-      headers: { 'Content-Type': 'application/json' },
-    }
+      headers: { "Content-Type": "application/json" },
+    };
 
     const { data } = await axios.post(
-      '/api/v1/utils/sales/create',
+      "/api/v1/utils/sales/create",
       utilsSalesData,
-      config,
-    )
+      config
+    );
 
-    dispatch({ type: CREATE_UTILS_SALES_SUCCESS, payload: data })
+    dispatch({ type: CREATE_UTILS_SALES_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: CREATE_UTILS_SALES_FAIL,
       payload: error.response.data.message,
-    })
+    });
   }
-}
+};
 
 // Update Sales
 export const updateUtilsSales = (utilsSalesUpdateData) => async (dispatch) => {
-  dispatch({ type: UPDATE_UTILS_SALES_REQUEST })
+  dispatch({ type: UPDATE_UTILS_SALES_REQUEST });
 
   const { data } = await axios({
-    url: '/api/v1/utils/sales/update',
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    url: "/api/v1/utils/sales/update",
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
     data: {
       userId: utilsSalesUpdateData.userId,
       salesData: utilsSalesUpdateData.salesData,
     },
   })
     .then((r) => {
-      dispatch({ type: UPDATE_UTILS_SALES_SUCCESS, payload: r.data })
+      dispatch({ type: UPDATE_UTILS_SALES_SUCCESS, payload: r.data });
     })
     .catch((err) => {
-      console.log(err.message)
+      console.log(err.message);
       dispatch({
         type: UPDATE_UTILS_SALES_FAIL,
         payload: err,
-      })
-    })
-}
+      });
+    });
+};
 
 // Update unpaid sales
-export const updateUnpaidUtilsSalesReceipt = (utilsSalesUpdateData) => async (
-  dispatch,
-) => {
-  dispatch({ type: UPDATE_UNPAID_UTILS_SALES_REQUEST })
-  const { data } = await axios({
-    url: '/api/v1/utils/sales/update/unpaid',
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    data: {
-      saleId: utilsSalesUpdateData.saleId,
-      isPaid: utilsSalesUpdateData.isPaid,
-      amountBalance: utilsSalesUpdateData.amountBalance,
-      amountPaid: utilsSalesUpdateData.amountPaid,
-    },
-  })
-    .then((r) => {
-      console.log(r.data)
-      dispatch({ type: UPDATE_UNPAID_UTILS_SALES_SUCCESS, payload: r.data })
+export const updateUnpaidUtilsSalesReceipt =
+  (utilsSalesUpdateData) => async (dispatch) => {
+    dispatch({ type: UPDATE_UNPAID_UTILS_SALES_REQUEST });
+    const data = await axios({
+      url: "/api/v1/utils/sales/update/unpaid",
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      data: {
+        saleId: utilsSalesUpdateData.saleId,
+        isPaid: utilsSalesUpdateData.isPaid,
+        amountBalance: utilsSalesUpdateData.amountBalance,
+        amountPaid: utilsSalesUpdateData.amountPaid,
+      },
     })
-    .catch((err) => {
-      console.log(err)
-      dispatch({
-        type: UPDATE_UNPAID_UTILS_SALES_FAIL,
-        payload: err,
+      .then((r) => {
+        console.log(r);
+        dispatch({ type: UPDATE_UNPAID_UTILS_SALES_SUCCESS, payload: r.data });
       })
-    })
-}
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: UPDATE_UNPAID_UTILS_SALES_FAIL,
+          payload: err,
+        });
+      });
+  };
 
 // Delete sales receipt
 // export const deleteSalesReceipt = (utilsSalesUpdateData) => async (
@@ -182,3 +184,28 @@ export const updateUnpaidUtilsSalesReceipt = (utilsSalesUpdateData) => async (
 //       })
 //     })
 // }
+
+// Update Utils Stock
+export const updateUtilsStock = (updateData) => async (dispatch) => {
+  dispatch({ type: UPDATE_UTILS_STOCK_REQUEST });
+  const data = await axios({
+    url: "/api/v1/utils/stock",
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    data: {
+      utilId: updateData?.utilId,
+      stock: updateData?.stock,
+    },
+  })
+    .then((r) => {
+      console.log(r);
+      dispatch({ type: UPDATE_UTILS_STOCK_SUCCESS, payload: r.data });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: UPDATE_UTILS_STOCK_FAIL,
+        payload: err,
+      });
+    });
+};

@@ -3,6 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 // CSS Import
 import "../index.css";
 
+// Datejs Import
+import "datejs";
+
 // Redux Toolkit Import
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,6 +16,7 @@ import {
   createSupplementSales,
   getSupplementsSales,
   deleteSupplementSales,
+  updateSupplementStock,
 } from "../redux/actions/supplementActions";
 
 // UUIDV4 import
@@ -38,14 +42,17 @@ import {
   TableCell,
   Tooltip,
   IconButton,
-  Autocomplete,
+  Input,
+  InputAdornment,
 } from "@mui/material";
 
 // Material Icons Import
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import SearchIcon from "@mui/icons-material/Search";
 
 // Component Import
 import UtilsSalesTable from "../components/UtilsSalesTable";
+import StockMenu from "../components/StockMenu";
 
 // Asset import
 import profile from "../assets/profile.webp";
@@ -78,16 +85,18 @@ const Supplements = () => {
   //   Create Utils
   const [name, setName] = useState("");
   const [stock, setStock] = useState(0);
+  const [supplementAmount, setSupplementAmount] = useState(0);
   const handleCreateUtil = () => {
     const data = {
       supplement: {
         name,
         stock: Number(stock),
+        amount: supplementAmount,
       },
       image: profileImage,
     };
     dispatch(createSupplement(data));
-    window.location.reload();
+    // window.location.reload();
   };
 
   // Create Utility Sales
@@ -117,16 +126,11 @@ const Supplements = () => {
   ];
 
   const getSaleMonth = (dt) => {
-    const d = new Date(dt);
-    return months[d.getMonth()];
-  };
-  const getSaleYear = (y) => {
-    const d = new Date(y);
-    return String(d.getFullYear());
+    const d = Date?.parse(dt);
+    return months[d?.getMonth()];
   };
 
   const saleMonth = getSaleMonth(date);
-  const saleYear = getSaleYear(date);
 
   const handleAddItem = () => {
     const data = {
@@ -142,6 +146,7 @@ const Supplements = () => {
   const handleRemoveReceiptItem = (index) => {
     setItems(items.filter((item) => item.id !== index));
   };
+  console.log(items);
 
   const handleCreateUtilsSale = () => {
     const data = {
@@ -149,13 +154,19 @@ const Supplements = () => {
       sale: {
         isPaid: status === "Paid" ? true : false,
         date,
-        year: saleYear,
         month: saleMonth,
         items,
         amountPaid,
-        amountBalance : total - amountPaid,
+        amountBalance: total - amountPaid,
       },
     };
+    items?.filter((item) => {
+      const data = {
+        id: item?.supplement?._id,
+        stock: Number(item?.supplement?.stock) - Number(item?.quantity),
+      };
+      return dispatch(updateSupplementStock(data));
+    });
     dispatch(createSupplementSales(data));
     window.location.reload();
   };
@@ -163,8 +174,8 @@ const Supplements = () => {
   // Sales Record
 
   const getCurrentMonth = () => {
-    const d = new Date();
-    return months[d.getMonth()];
+    const d = Date?.today();
+    return months[d?.getMonth()];
   };
   const currentMonth = getCurrentMonth();
   const [month, setMonth] = useState(currentMonth);
@@ -175,6 +186,18 @@ const Supplements = () => {
       selectedMonthSales.unshift(data);
     }
   });
+
+  // Stock Management
+  const [query, setQuery] = useState("");
+  const handleUpdateStock = (update) => {
+    const data = {
+      id: update?.id,
+      stock: update?.stock,
+    };
+    console.log(data);
+    dispatch(updateSupplementStock(data));
+    window.location.reload();
+  };
 
   useEffect(() => {
     dispatch(getAllSupplements());
@@ -616,7 +639,7 @@ const Supplements = () => {
                     width: "98%",
                   }}
                 >
-                  Create Utility
+                  Create Supplement
                 </Typography>
               </Grid>
               <Grid item sx={{ minHeight: "160px", width: "100%" }} xs={12}>
@@ -628,7 +651,7 @@ const Supplements = () => {
                       gap: "15px 0px",
                     }}
                   >
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={4}>
                       <TextField
                         id="outlined-error-helper-text"
                         label="Name"
@@ -637,13 +660,22 @@ const Supplements = () => {
                         onChange={(e) => setName(e.target.value)}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={4}>
                       <TextField
                         id="outlined-error-helper-text"
                         label="Stock"
                         sx={{ width: "94%" }}
                         color="success"
                         onChange={(e) => setStock(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        id="outlined-error-helper-text"
+                        label="Amount Paid"
+                        sx={{ width: "94%" }}
+                        color="success"
+                        onChange={(e) => setSupplementAmount(e.target.value)}
                       />
                     </Grid>
                     <Grid
@@ -693,6 +725,142 @@ const Supplements = () => {
                     </Grid>
                   </Grid>
                 </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              minHeight: "460px",
+              border: `2px solid ${colors.lightGreen[700]}`,
+              marginTop: "20px",
+              borderRadius: "20px",
+              padding: "15px",
+            }}
+          >
+            <Grid container sx={{ height: "100%", width: "100%" }}>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  height: "50px",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{
+                    paddingLeft: "15px",
+                    borderBottom: `2px solid ${colors.lightGreen[700]}`,
+                    width: "98%",
+                  }}
+                >
+                  Supplements Stock
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  // minHeight: "160px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                xs={12}
+              >
+                <Box
+                  sx={{
+                    height: "80px",
+                    width: "60%",
+                    display: "flex",
+                    alignItems: "center",
+                    border: `2px solid ${colors.lightGreen[700]}`,
+                    borderRadius: "20px",
+                    mt: 5,
+                    padding: "0 20px",
+                  }}
+                >
+                  <FormControl sx={{ m: 1, width: "100%" }}>
+                    <Input
+                      id="standard-adornment-password"
+                      color="success"
+                      type="text"
+                      onChange={(c) => setQuery(c.target.value)}
+                      placeholder="Search supplement by name..."
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick=""
+                            onMouseDown=""
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                </Box>
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  // minHeight: "160px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                xs={12}
+              >
+                <TableContainer sx={{ minHeight: "350px" }}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell sx={{ width: "13%" }}></TableCell>
+                        <TableCell sx={{ width: "50%" }}>Supplement</TableCell>
+                        <TableCell sx={{ width: "20%" }}>Stock</TableCell>
+                        <TableCell sx={{ width: "17%" }}></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {supplementsData?.supplement
+                        ?.filter((supplement) =>
+                          supplement?.name
+                            .toLowerCase()
+                            .includes(query.toLowerCase())
+                        )
+                        .map((supplement) => (
+                          <TableRow
+                            key={supplement._id}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell>
+                              <img
+                                src={supplement?.image?.url}
+                                style={{ height: "50px" }}
+                                alt="Product"
+                              />
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {supplement?.name}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {supplement?.stock}
+                            </TableCell>
+                            <TableCell>
+                              <StockMenu
+                                handleUpdateStock={handleUpdateStock}
+                                product={supplement}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
             </Grid>
           </Grid>

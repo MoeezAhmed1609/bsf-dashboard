@@ -20,3 +20,13 @@ exports.createExpenseRecord = async (req, res, next) => {
     expense,
   });
 };
+
+// Delete expense record
+exports.deleteExpenseRecord = async (req, res, next) => {
+  const expense = await Expenses.findByIdAndDelete(req.body.id);
+
+  res.status(200).json({
+    success: true,
+    expense,
+  });
+};
