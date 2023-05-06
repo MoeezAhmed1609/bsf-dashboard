@@ -71,7 +71,7 @@ const ClientProfile = () => {
 
   const feeDate = Date.parse(client?.client?.feeReminder)
     ?.addDays(3)
-    ?.toString("yyyy-MM-d");
+    ?.toString("yyyy-MM-dd");
 
   const data = [
     {
@@ -160,13 +160,13 @@ const ClientProfile = () => {
 
   const length = profile?.fees?.length;
   const fee = Date.parse(profile?.fees[length - 1]?.feeDate)?.toString(
-    "yyyy-MM-d"
+    "yyyy-MM-dd"
   );
 
   const feeReminder = Date.parse(fee)
     ?.addMonths(2)
     ?.addDays(-3)
-    ?.toString("yyyy-MM-d");
+    ?.toString("yyyy-MM-dd");
 
   // Create Client & Print Summary
 
@@ -194,11 +194,11 @@ const ClientProfile = () => {
 
     const feeReminder =
       profile?.fees?.length > 0
-        ? Date.parse(fee).addMonths(2).addDays(-3).toString("yyyy-MM-d")
+        ? Date.parse(fee).addMonths(2).addDays(-3).toString("yyyy-MM-dd")
         : Date.parse(profile?.date)
             .addMonths(1)
             .addDays(-3)
-            .toString("yyyy-MM-d");
+            .toString("yyyy-MM-dd");
 
     const feeDate =
       profile?.fees?.length > 0

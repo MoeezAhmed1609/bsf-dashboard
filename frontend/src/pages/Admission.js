@@ -148,10 +148,10 @@ const Admission = () => {
   });
 
   const handleCreateClient = () => {
-    const feeReminder = Date.today()
-      .addMonths(1)
-      .addDays(-3)
-      .toString("yyyy-MM-d");
+    const feeReminder = Date.parse(admission)
+      ?.addMonths(1)
+      ?.addDays(-3)
+      ?.toString("yyyy-MM-dd");
     const data = {
       profile: profileImage,
       client: {
@@ -275,7 +275,7 @@ const Admission = () => {
                       <input
                         type="date"
                         className="datePicker"
-                        max={Date.today().toString("yyyy-MM-d")}
+                        max={Date.today().toString("yyyy-MM-dd")}
                         onChange={(e) => setAdmission(e.target.value)}
                         required
                       />
@@ -834,10 +834,10 @@ const Admission = () => {
                   },
                 }}
               >
-                <Grid item xs={12} sx={{ display: "flex", height: "220px" }}>
+                <Grid item xs={12} sx={{ display: "flex", height: "170px" }}>
                   <Box
                     sx={{
-                      height: "220px",
+                      height: "170px",
                       width: "20%",
                       display: "flex",
                       flexDirection: "column",
@@ -847,13 +847,13 @@ const Admission = () => {
                   >
                     <img
                       src={profileImage}
-                      style={{ width: "100%" }}
+                      style={{ height: "160px" }}
                       alt="profile"
                     />
                   </Box>
                   <Box
                     sx={{
-                      height: "220px",
+                      height: "170px",
                       width: "45%",
                       display: "flex",
                       flexDirection: "column",
@@ -871,13 +871,14 @@ const Admission = () => {
                     <List
                       sx={{
                         width: "100%",
+                        padding: "0"
                       }}
                       component="nav"
                       aria-labelledby="nested-list-subheader"
                     >
                       <ListItem>
                         <ListItemIcon>
-                          <PhoneIcon sx={{ fontSize: "24px" }} />
+                          <PhoneIcon sx={{ fontSize: "22px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary={
@@ -892,9 +893,9 @@ const Admission = () => {
                           }
                         />
                       </ListItem>
-                      <ListItem sx={{ marginTop: "-14px" }}>
+                      <ListItem sx={{ marginTop: "-18px" }}>
                         <ListItemIcon>
-                          <EmailIcon sx={{ fontSize: "24px" }} />
+                          <EmailIcon sx={{ fontSize: "22px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary={
@@ -904,9 +905,9 @@ const Admission = () => {
                           }
                         />
                       </ListItem>
-                      <ListItem sx={{ marginTop: "-10px" }}>
+                      <ListItem sx={{ marginTop: "-15px" }}>
                         <ListItemIcon>
-                          <InstagramIcon sx={{ fontSize: "24px" }} />
+                          <InstagramIcon sx={{ fontSize: "22px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary={
@@ -916,9 +917,9 @@ const Admission = () => {
                           }
                         />
                       </ListItem>
-                      <ListItem sx={{ marginTop: "-10px" }}>
+                      <ListItem sx={{ marginTop: "-15px" }}>
                         <ListItemIcon>
-                          <LocationOnIcon sx={{ fontSize: "24px" }} />
+                          <LocationOnIcon sx={{ fontSize: "22px" }} />
                         </ListItemIcon>
                         <ListItemText
                           primary={
@@ -951,7 +952,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -982,7 +983,7 @@ const Admission = () => {
                         minWidth: "140px",
                         textAlign: "center",
                         borderBottom: "1px solid black",
-                        // height: "30px",
+                        height: "30px",
                         marginLeft: "15px",
                       }}
                     >
@@ -1019,7 +1020,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1125,7 +1126,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1157,7 +1158,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1225,7 +1226,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1295,7 +1296,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1327,7 +1328,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1357,7 +1358,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "15px",
                     justifyContent: "center",
                   }}
@@ -1388,7 +1389,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "50px",
                     marginTop: "25px",
                     justifyContent: "center",
                   }}
@@ -1477,7 +1478,7 @@ const Admission = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    height: "80px",
+                    height: "60px",
                     marginTop: "30px",
                     justifyContent: "space-between",
                   }}

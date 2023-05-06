@@ -127,7 +127,7 @@ const Dashboard = () => {
   // Get Fee Reminders
   let reminders = [];
   clientsData?.clients?.filter((client) => {
-    let date = Date.today().toString("yyyy-MM-d");
+    let date = Date.today().toString("yyyy-MM-dd");
     if (client?.feeReminder === date && client?.status === "Active") {
       const feeDate = new Date(client?.feeReminder)
         .add({ days: 3 })
@@ -139,6 +139,7 @@ const Dashboard = () => {
       reminders.unshift(data);
     }
   });
+  console.log(reminders)
 
   // STock Reminders
   const stockReminders = [];
@@ -147,7 +148,6 @@ const Dashboard = () => {
       stockReminders.push(data);
     }
   });
-  console.log(stockReminders);
 
   return (
     <Box
