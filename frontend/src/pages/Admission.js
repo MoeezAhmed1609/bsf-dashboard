@@ -77,6 +77,10 @@ const Admission = () => {
   const [feePaidAmount, setFeePaidAmount] = useState(0);
   const [feePaidStatus, setFeePaidStatus] = useState("");
   const [feePaidDate, setFeePaidDate] = useState("");
+  const [locker, setLocker] = useState("");
+  const [lockerAmount, setLockerAmount] = useState(0);
+  const [lockerPaidAmount, setLockerPaidAmount] = useState(0);
+  const [lockerPaidStatus, setLockerPaidStatus] = useState("");
   const [gymPackage, setGymPackage] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
 
@@ -681,6 +685,88 @@ const Admission = () => {
                         </Select>
                       </FormControl>
                     </Grid>
+                    
+                    {/* Locker */}
+                    {/* <Grid item xs={12} sx={{ marginBottom: "-15px" }}>
+                      <Typography variant="subtitle2">Locker</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth sx={{ width: "94%" }}>
+                        <InputLabel
+                          color="success"
+                          id="demo-simple-select-label"
+                        >
+                          Locker
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          color="success"
+                          required
+                          value={feePaidStatus}
+                          label="Payment Status"
+                          onChange={(e) => setLocker(e.target.value)}
+                        >
+                          <MenuItem value={"Yes"}>Yes</MenuItem>
+                          <MenuItem value={"No"}>No</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id="outlined-error-helper-text"
+                        label="Fee Amount"
+                        required
+                        color="success"
+                        sx={{ width: "94%" }}
+                        onChange={(e) => setLockerAmount(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        id="outlined-error-helper-text"
+                        label="Fee Paid"
+                        color="success"
+                        required
+                        sx={{ width: "94%" }}
+                        onChange={(e) => setLockerPaidAmount(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                        id="outlined-error-helper-text"
+                        label="Fee Balance"
+                        required
+                        color="success"
+                        sx={{ width: "94%" }}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        value={lockerAmount - lockerPaidAmount}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <FormControl fullWidth sx={{ width: "94%" }}>
+                        <InputLabel
+                          color="success"
+                          id="demo-simple-select-label"
+                        >
+                          Payment Status
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          color="success"
+                          required
+                          value={lockerPaidStatus}
+                          label="Payment Status"
+                          onChange={(e) => setLockerPaidStatus(e.target.value)}
+                        >
+                          <MenuItem value={"Paid"}>Paid</MenuItem>
+                          <MenuItem value={"Unpaid"}>Unpaid</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid> */}
                     <Grid item xs={12} sm={4} sx={{ marginTop: "20px" }}>
                       <FormControl fullWidth sx={{ width: "94%" }}>
                         <InputLabel
@@ -700,6 +786,9 @@ const Admission = () => {
                         >
                           <MenuItem value={"Cash"}>Cash</MenuItem>
                           <MenuItem value={"Online"}>Online</MenuItem>
+                          <MenuItem value={"Cash + Online"}>
+                            Cash + Online
+                          </MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -720,8 +809,27 @@ const Admission = () => {
                           label="Select Package"
                           onChange={(e) => setGymPackage(e.target.value)}
                         >
-                          <MenuItem value={"Cardio"}>Cardio</MenuItem>
                           <MenuItem value={"Strength"}>Strength</MenuItem>
+                          <MenuItem value={"Cardio"}>Cardio</MenuItem>
+                          <MenuItem value={"Strength + Cardio"}>
+                            Strength + Cardio
+                          </MenuItem>
+                          <MenuItem value={"Treadmill"}>Treadmill</MenuItem>
+                          <MenuItem value={"Strength + Treadmill"}>
+                            Strength + Treadmill
+                          </MenuItem>
+                          <MenuItem value={"Strength Personal"}>
+                            Strength Personal
+                          </MenuItem>
+                          <MenuItem value={"Cardio Personal"}>
+                            Cardio Personal
+                          </MenuItem>
+                          <MenuItem value={"Strength + Treadmill Personal"}>
+                            Strength + Treadmill Personal
+                          </MenuItem>
+                          <MenuItem value={"Cardio Personal"}>
+                            Cardio Personal
+                          </MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -871,7 +979,7 @@ const Admission = () => {
                     <List
                       sx={{
                         width: "100%",
-                        padding: "0"
+                        padding: "0",
                       }}
                       component="nav"
                       aria-labelledby="nested-list-subheader"
