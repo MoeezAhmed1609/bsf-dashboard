@@ -19,11 +19,13 @@ const clients = require("./routes/clientRoute");
 const utils = require("./routes/utilsRoute");
 const supplements = require("./routes/supplementRoute");
 const expenses = require("./routes/expensesRoute");
+const reminder = require("./routes/reminderRoutes");
 
 app.use("/api/v1", clients);
 app.use("/api/v1", utils);
 app.use("/api/v1", supplements);
 app.use("/api/v1", expenses);
+app.use("/api/v1", reminder);
 
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 

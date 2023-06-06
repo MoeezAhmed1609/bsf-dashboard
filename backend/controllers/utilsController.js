@@ -87,11 +87,8 @@ exports.updateUnpaidUtilsSalesRecord = async (req, res, next) => {
 };
 
 // delete utils sales record
-exports.deleteUtilsSalesRecord = async (req, res, next) => {
-  const utilsSale = await UtilsSales.updateOne(
-    { _id: req.body.userId },
-    { $pull: { sales: { _id: req.body.salesId } } }
-  );
+exports.deleteUtilsSalesRecord = async (req, res) => {
+  const utilsSale = await UtilsSales.deleteOne({_id : req.body.id});
   res.status(200).json({
     success: true,
     utilsSale,
@@ -109,4 +106,4 @@ exports.updateUtilsStock = async (req, res) => {
     success: true,
     utils,
   });
-}; 
+};

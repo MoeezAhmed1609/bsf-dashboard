@@ -23,6 +23,12 @@ import {
   UPDATE_CLIENT_UNPAID_FEES_REQUEST,
   UPDATE_CLIENT_UNPAID_FEES_SUCCESS,
   UPDATE_CLIENT_UNPAID_FEES_FAIL,
+  DELETE_CLIENT_REQUEST,
+  DELETE_CLIENT_SUCCESS,
+  DELETE_CLIENT_FAIL,
+  EDIT_CLIENT_REQUEST,
+  EDIT_CLIENT_SUCCESS,
+  EDIT_CLIENT_FAIL,
   CLEAR_ALL_ERRORS,
 } from "../constants/clientConstants";
 
@@ -104,6 +110,24 @@ export const clientReducer = createReducer(initialState.clients, (builder) => {
       error: action.payload,
     };
   });
+  builder.addCase(DELETE_CLIENT_REQUEST, (state, action) => {
+    return {
+      loading: true,
+      clientsData: [],
+    };
+  });
+  builder.addCase(DELETE_CLIENT_SUCCESS, (state, action) => {
+    return {
+      loading: false,
+      clientsData: action.payload,
+    };
+  });
+  builder.addCase(DELETE_CLIENT_FAIL, (state, action) => {
+    return {
+      loading: false,
+      error: action.payload,
+    };
+  });
   builder.addCase(CLEAR_ALL_ERRORS, (state, action) => {
     return {
       ...state,
@@ -164,6 +188,24 @@ export const clientDetailsReducer = createReducer(
       };
     });
     builder.addCase(UPDATE_CLIENT_FEES_FAIL, (state, action) => {
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    });
+    builder.addCase(EDIT_CLIENT_REQUEST, (state, action) => {
+      return {
+        loading: true,
+        ...state,
+      };
+    });
+    builder.addCase(EDIT_CLIENT_SUCCESS, (state, action) => {
+      return {
+        loading: false,
+        client: action.payload,
+      };
+    });
+    builder.addCase(EDIT_CLIENT_FAIL, (state, action) => {
       return {
         loading: false,
         error: action.payload,

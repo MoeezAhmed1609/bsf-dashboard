@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Datejs Import
 import "datejs";
 
 // Redux Toolkit Import
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
 
@@ -19,12 +19,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
 
 // Components Import
 import LineChart from "../components/LineChart";
 
+// ACtions Import
+import { createReminder } from "../redux/actions/reminderActions";
+
 const Dashboard = () => {
+  const dispatch = useDispatch();
   // Getting sales from redux state
   const { clientsData } = useSelector((state) => state.clients);
   // Getting expenses from redux state
@@ -125,10 +130,12 @@ const Dashboard = () => {
   feesLineData.push(data);
   let totalMonthSales = totalMonthUtilsSales + totalMonthSupplementSales;
   // Get Fee Reminders
-  let reminders = [];
+  const reminders = [];
   clientsData?.clients?.filter((client) => {
     let date = Date.today().toString("yyyy-MM-dd");
-    if (client?.feeReminder === date && client?.status === "Active") {
+    var monthNum = Date.getMonthNumberFromName(month);
+    var d = new Date(2023, monthNum + 1, 0).addDays(3).toString("yyyy-MM-dd");
+    if (client?.feeReminder <= date && client?.status === "Active") {
       const feeDate = new Date(client?.feeReminder)
         .add({ days: 3 })
         .toString("yyyy-MM-dd");
@@ -139,12 +146,11 @@ const Dashboard = () => {
       reminders.unshift(data);
     }
   });
-  console.log(reminders)
 
   // STock Reminders
   const stockReminders = [];
   utilsData?.utils?.filter((data) => {
-    if (data?.stock < 6) {
+    if (data?.stock <= 6) {
       stockReminders.push(data);
     }
   });

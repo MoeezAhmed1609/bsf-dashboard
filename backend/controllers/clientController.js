@@ -186,3 +186,84 @@ exports.updateClientFeesLedger = async (req, res, next) => {
     client,
   });
 };
+
+// Delete a client
+exports.deleteClient = async (req, res, next) => {
+  let client = await Client.findById(req.body.id);
+  if (!client) {
+    return res.status(404).json({
+      success: false,
+      message: "Client not found!",
+    });
+  }
+  client = await Client.findByIdAndDelete(req.body.id);
+  res.status(200).json({
+    success: true,
+    message: "Deleted!",
+    client,
+  });
+};
+
+// Edit Client
+
+exports.editClient = async (req, res, next) => {
+  const {
+    id,
+    package,
+    name,
+    gender,
+    marital,
+    age,
+    height,
+    weight,
+    goalWeight,
+    lifeStatus,
+    address,
+    phone,
+    mobile,
+    email,
+    cnic,
+    trainer,
+    gymBefore,
+    problem,
+    guardian,
+  } = req.body.client;
+
+  let client = await Client.findById(id);
+  if (!client) {
+    return res.status(404).json({
+      success: false,
+      message: "Client not found!",
+    });
+  }
+
+  client = await Client.findByIdAndUpdate(
+    id,
+    {
+      package,
+      name,
+      gender,
+      marital,
+      age,
+      height,
+      weight,
+      goalWeight,
+      lifeStatus,
+      address,
+      phone,
+      mobile,
+      email,
+      cnic,
+      trainer,
+      gymBefore,
+      problem,
+      guardian,
+    },
+    { new: true, runValidators: true, useFindAndModify: false }
+  );
+  res.status(200).json({
+    success: true,
+    message: "Updated!",
+    client,
+  });
+};

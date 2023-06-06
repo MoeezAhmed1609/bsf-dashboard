@@ -48,7 +48,7 @@ export default function LineChart({ lineData }) {
         backgroundColor: colors.cyan[500],
       },
       {
-        label: "Utilities Sales",
+        label: "Gym Products Sales",
         data: lineData?.map((line) => line?.utilsSales),
         backgroundColor: colors.green[300],
       },

@@ -9,7 +9,9 @@ const {
   getClientDetails,
   updateClientStatus,
   updateClientAdmissionLedger,
-  updateClientFeesLedger
+  updateClientFeesLedger,
+  deleteClient,
+  editClient,
 } = require("../controllers/clientController");
 
 router.get("/clients", getAllClients);
@@ -19,5 +21,7 @@ router.put("/clients/update/fees", updateClientFees);
 router.put("/clients/update/status", updateClientStatus);
 router.put("/clients/update/admission", updateClientAdmissionLedger);
 router.put("/clients/update/fee", updateClientFeesLedger);
+router.delete("/clients/delete", deleteClient);
+router.put("/clients/edit", editClient);
 
 module.exports = router;

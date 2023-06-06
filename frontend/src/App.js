@@ -14,6 +14,7 @@ import {
   getSupplementsSales,
 } from "./redux/actions/supplementActions";
 import { getUtilsSales, getAllUtils } from "./redux/actions/utilsActions";
+import { getReminders } from "./redux/actions/reminderActions";
 
 // Pages Import
 import Dashboard from "./pages/Dashboard";
@@ -38,6 +39,7 @@ function App() {
     dispatch(getSupplementsSales());
     dispatch(getAllSupplements());
     dispatch(getAllUtils());
+    dispatch(getReminders())
   }, [dispatch]);
   return (
     <Router>

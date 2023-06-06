@@ -23,6 +23,12 @@ import {
   UPDATE_CLIENT_UNPAID_FEES_REQUEST,
   UPDATE_CLIENT_UNPAID_FEES_SUCCESS,
   UPDATE_CLIENT_UNPAID_FEES_FAIL,
+  DELETE_CLIENT_REQUEST,
+  DELETE_CLIENT_SUCCESS,
+  DELETE_CLIENT_FAIL,
+  EDIT_CLIENT_REQUEST,
+  EDIT_CLIENT_SUCCESS,
+  EDIT_CLIENT_FAIL,
   CLEAR_ALL_ERRORS,
 } from "../constants/clientConstants";
 
@@ -182,6 +188,51 @@ export const updateClientFeesLedger = (feeData) => async (dispatch) => {
       console.log(err);
       dispatch({
         type: UPDATE_CLIENT_UNPAID_FEES_FAIL,
+        payload: err,
+      });
+    });
+};
+
+// Delete Client
+export const deleteClient = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_CLIENT_REQUEST });
+    const data = await axios({
+      url: "/api/v1/clients/delete",
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      data: {
+        id: id,
+      },
+    });
+    dispatch({ type: DELETE_CLIENT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: DELETE_CLIENT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Edit Client
+export const editClient = (clientData) => async (dispatch) => {
+  dispatch({ type: EDIT_CLIENT_REQUEST });
+
+  const { data } = await axios({
+    url: "/api/v1/clients/edit",
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    data: {
+      client: clientData,
+    },
+  })
+    .then((r) => {
+      dispatch({ type: EDIT_CLIENT_SUCCESS, payload: r.data });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      dispatch({
+        type: EDIT_CLIENT_FAIL,
         payload: err,
       });
     });

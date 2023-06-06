@@ -16,6 +16,7 @@ import {
   createUtilsSales,
   getUtilsSales,
   updateUtilsStock,
+  deleteUtilsSales,
 } from "../redux/actions/utilsActions";
 
 // UUIDV4 import
@@ -139,6 +140,7 @@ const Utils = () => {
       item: utility.name,
       quantity,
       amount,
+      stock: utility.stock,
     };
     setItems((items) => [...items, data]);
     setTotal((total) => (total += Number(data.amount)));
@@ -195,6 +197,22 @@ const Utils = () => {
     };
     dispatch(updateUtilsStock(data));
     window.location.reload();
+  };
+
+  // Delete Sales
+  const deleteSales = (data) => {
+    data?.sale?.items?.filter((item) => {
+      const data = {
+        util: item?._id,
+        stock: item?.stock,
+      };
+      return dispatch(updateUtilsStock(data));
+    });
+    const update = {
+      id: data?._id 
+    }
+    dispatch(deleteUtilsSales(update));
+    // window.location.reload()
   };
 
   useEffect(() => {
@@ -595,7 +613,10 @@ const Utils = () => {
                     </Grid>
                     <Grid item xs={12}>
                       {selectedMonthSales.length > 0 ? (
-                        <UtilsSalesTable data={selectedMonthSales} />
+                        <UtilsSalesTable
+                          data={selectedMonthSales}
+                          deleteSales={deleteSales}
+                        />
                       ) : (
                         <Box
                           sx={{

@@ -40,17 +40,13 @@ import {
   Select,
   MenuItem,
   TextField,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
 } from "@mui/material";
 
-// Material Icons
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+// Component Imports
+import EditModal from "../components/EditModal";
+
+// Actions Imports
+import { editClient } from "../redux/actions/clientActions";
 
 const ClientProfile = () => {
   const dispatch = useDispatch();
@@ -228,6 +224,17 @@ const ClientProfile = () => {
     }).then(() => window.location.reload());
   };
 
+  // Edit Profile
+  // Modal
+  // const [open, setOpen] = useState(false);
+
+  // Function
+  // const editClientProfile = (clientData) => {
+  //   dispatch(editClient(clientData));
+  //   setOpen(false);
+  //   // window.location.reload();
+  // };
+
   useEffect(() => {
     dispatch(getClientDetails(params.id));
   }, [dispatch, params.id]);
@@ -373,6 +380,23 @@ const ClientProfile = () => {
                 {profile?.status === "Active" ? "Non Active" : "Active"}
               </Button>
             </Box>
+            {/* <Button
+              variant="contained"
+              color="success"
+              size="small"
+              sx={{
+                marginBottom: "20px",
+                display: {
+                  xs: "none",
+                  sm: "none",
+                  md: "flex",
+                },
+              }}
+              onClick={() => setOpen(true)}
+            >
+              Edit Profile
+            </Button> */}
+            {/* <EditModal open={open} setOpen={setOpen} profile={profile} editClientProfile={editClientProfile} /> */}
             <Button
               variant="contained"
               color="success"

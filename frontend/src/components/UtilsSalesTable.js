@@ -16,7 +16,8 @@ import { useReactToPrint } from "react-to-print";
 import { deleteSupplementSales } from "../redux/actions/supplementActions";
 import { useDispatch } from "react-redux";
 
-export default function UtilsSalesTable({ data }) {
+export default function UtilsSalesTable({ data, deleteSales }) {
+  console.log(data)
   const dispatch = useDispatch();
 
   let total = 0;
@@ -36,10 +37,11 @@ export default function UtilsSalesTable({ data }) {
 
   return (
     <>
-      <TableContainer ref={print}>
+      <TableContainer ref={print} sx={{ maxHeight: "500px" }}>
         <Table sx={{ minWidth: 700 }} aria-label="spanning table">
           <TableHead>
             <TableRow>
+              <TableCell sx={{ width: "60px" }}></TableCell>
               <TableCell sx={{ width: "150px" }}>Customer</TableCell>
               <TableCell sx={{ minWidth: "230px" }}>Items</TableCell>
               <TableCell align="right">Total</TableCell>
@@ -48,6 +50,15 @@ export default function UtilsSalesTable({ data }) {
           <TableBody>
             {data?.map((row) => (
               <TableRow key={row?._id}>
+                <TableCell align="center">
+                  <Tooltip title="Delete">
+                    <IconButton
+                      onClick={() => deleteSales(data)}
+                    >
+                      <DeleteIcon color="error" fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
                 <TableCell>{row?.customer}</TableCell>
                 <TableCell>
                   <Box sx={{ display: "flex", gap: "5px" }}>

@@ -76,7 +76,7 @@ export default function ExpensesTable(props) {
     <>
       {data?.length > 0 ? (
         <>
-          <TableContainer ref={print}>
+          <TableContainer ref={print} sx={{maxHeight: '500px'}}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>

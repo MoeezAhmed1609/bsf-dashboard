@@ -30,6 +30,7 @@ const utilsSalesSchema = mongoose.Schema({
           required: [true, "Identify product quantity!"],
         },
         amount: Number,
+        stock: Number,
       },
     ],
     amountPaid: { type: Number, required: true },

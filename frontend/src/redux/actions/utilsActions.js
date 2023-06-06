@@ -158,32 +158,29 @@ export const updateUnpaidUtilsSalesReceipt =
       });
   };
 
-// Delete sales receipt
-// export const deleteSalesReceipt = (utilsSalesUpdateData) => async (
-//   dispatch,
-// ) => {
-//   dispatch({ type: UPDATE_UNPAID_UTILS_SALES_REQUEST })
-//   const { data } = await axios({
-//     url: '/api/v1/utils/sales/delete',
-//     method: 'DELETE',
-//     headers: { 'Content-Type': 'application/json' },
-//     data: {
-//       userId: utilsSalesUpdateData.userId,
-//       receiptId: utilsSalesUpdateData.receiptId,
-//     },
-//   })
-//     .then((r) => {
-//       console.log(r.data)
-//       dispatch({ type: UPDATE_UNPAID_UTILS_SALES_SUCCESS, payload: r.data })
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//       dispatch({
-//         type: UPDATE_UNPAID_UTILS_SALES_FAIL,
-//         payload: err,
-//       })
-//     })
-// }
+// Delete sale
+export const deleteUtilsSales = (data) => async (dispatch) => {
+  dispatch({ type: DELETE_UTILS_SALES_REQUEST });
+  const result = await axios({
+    url: "/api/v1/utils/sales/delete",
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    data: {
+      id: data?.id,
+    },
+  })
+    .then((r) => {
+      console.log(r);
+      dispatch({ type: DELETE_UTILS_SALES_SUCCESS, payload: r.data });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: DELETE_UTILS_SALES_FAIL,
+        payload: err,
+      });
+    });
+}
 
 // Update Utils Stock
 export const updateUtilsStock = (updateData) => async (dispatch) => {
