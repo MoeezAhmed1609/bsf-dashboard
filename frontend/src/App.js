@@ -23,11 +23,11 @@ import Profile from "./pages/Profile";
 import ClientProfile from "./pages/ClientProfile";
 import Utils from "./pages/Utils";
 import Supplement from "./pages/Supplement";
+import Expenses from "./pages/Expenses";
+import Ledger from "./pages/Ledger";
 
 // Components Import
 import Header from "./components/Header";
-import Expenses from "./pages/Expenses";
-import Ledger from "./pages/Ledger";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,23 +39,25 @@ function App() {
     dispatch(getSupplementsSales());
     dispatch(getAllSupplements());
     dispatch(getAllUtils());
-    dispatch(getReminders())
+    dispatch(getReminders());
   }, [dispatch]);
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/clients/admission" element={<Admission />} />
-        <Route path="/clients/profiles" element={<Profile />} />
-        <Route path="/clients/profiles/:id" element={<ClientProfile />} />
-        <Route path="/sales/utilities" element={<Utils />} />
-        <Route path="/sales/supplements" element={<Supplement />} />
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/ledger" element={<Ledger />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/clients/admission" element={<Admission />} />
+          <Route path="/clients/profiles" element={<Profile />} />
+          <Route path="/clients/profiles/:id" element={<ClientProfile />} />
+          <Route path="/sales/utilities" element={<Utils />} />
+          <Route path="/sales/supplements" element={<Supplement />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/ledger" element={<Ledger />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

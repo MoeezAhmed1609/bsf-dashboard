@@ -226,14 +226,14 @@ const ClientProfile = () => {
 
   // Edit Profile
   // Modal
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // Function
-  // const editClientProfile = (clientData) => {
-  //   dispatch(editClient(clientData));
-  //   setOpen(false);
-  //   // window.location.reload();
-  // };
+  const editClientProfile = (clientData) => {
+    dispatch(editClient(clientData));
+    setOpen(false);
+    window.location.reload();
+  };
 
   useEffect(() => {
     dispatch(getClientDetails(params.id));
@@ -316,7 +316,7 @@ const ClientProfile = () => {
               variant="h6"
               sx={{ fontWeight: "normal", paddingLeft: "10px" }}
             >
-              {profile?.gender}
+              {profile?.gender || "Not Available!"}
             </Typography>
             <Typography
               variant="h6"
@@ -380,7 +380,7 @@ const ClientProfile = () => {
                 {profile?.status === "Active" ? "Non Active" : "Active"}
               </Button>
             </Box>
-            {/* <Button
+            <Button
               variant="contained"
               color="success"
               size="small"
@@ -395,8 +395,13 @@ const ClientProfile = () => {
               onClick={() => setOpen(true)}
             >
               Edit Profile
-            </Button> */}
-            {/* <EditModal open={open} setOpen={setOpen} profile={profile} editClientProfile={editClientProfile} /> */}
+            </Button>
+            <EditModal
+              open={open}
+              setOpen={setOpen}
+              profile={profile}
+              editClientProfile={editClientProfile}
+            />
             <Button
               variant="contained"
               color="success"
