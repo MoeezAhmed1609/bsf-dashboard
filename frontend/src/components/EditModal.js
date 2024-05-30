@@ -22,12 +22,16 @@ const EditModal = ({ open, setOpen, profile, editClientProfile }) => {
     width: {
       lg: "60%",
       md: "80%",
+      xs: "85%",
     },
     height: "90%",
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
-    padding: "20px 30px",
+    padding: {
+      sm: "20px 30px",
+      xs: "15px",
+    },
     overflowY: "scroll",
   };
   // States

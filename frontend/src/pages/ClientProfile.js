@@ -386,11 +386,7 @@ const ClientProfile = () => {
               size="small"
               sx={{
                 marginBottom: "20px",
-                display: {
-                  xs: "none",
-                  sm: "none",
-                  md: "flex",
-                },
+                display: "flex",
               }}
               onClick={() => setOpen(true)}
             >
