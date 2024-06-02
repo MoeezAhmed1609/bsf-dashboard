@@ -209,6 +209,7 @@ exports.deleteClient = async (req, res, next) => {
 exports.editClient = async (req, res, next) => {
   const {
     id,
+    date,
     package,
     name,
     gender,
@@ -240,6 +241,7 @@ exports.editClient = async (req, res, next) => {
   client = await Client.findByIdAndUpdate(
     id,
     {
+      date,
       package,
       name,
       gender,

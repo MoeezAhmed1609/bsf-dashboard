@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 const EditModal = ({ open, setOpen, profile, editClientProfile }) => {
+  console.log({ profile });
   const style = {
     position: "absolute",
     top: "50%",
@@ -35,6 +36,7 @@ const EditModal = ({ open, setOpen, profile, editClientProfile }) => {
     overflowY: "scroll",
   };
   // States
+  const [date, setDate] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState(0);
@@ -57,6 +59,11 @@ const EditModal = ({ open, setOpen, profile, editClientProfile }) => {
   const [problem, setProblem] = useState("");
 
   const data = [
+    {
+      title: "Admission Date",
+      value: date ? date : profile?.date,
+      change: (e) => setDate(e.target.value),
+    },
     {
       title: "Name",
       value: name ? name : profile?.name,
@@ -161,6 +168,7 @@ const EditModal = ({ open, setOpen, profile, editClientProfile }) => {
 
   const clientData = {
     id: profile?._id,
+    date: date ? date : profile?.date,
     package: gymPackage ? gymPackage : profile?.package,
     name: name ? name : profile?.name,
     gender: gender ? gender : profile?.gender,
@@ -186,7 +194,7 @@ const EditModal = ({ open, setOpen, profile, editClientProfile }) => {
         : profile?.guardian.relation,
     },
   };
-  console.log(clientData);
+
   return (
     <Modal
       open={open}
